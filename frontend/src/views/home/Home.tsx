@@ -9,9 +9,10 @@ import { BounceLoader } from "react-spinners"
 export default function Home() {
   const [currentStage, setCurrentStage] = useState(0)
 
-  const itemId = useParams()
+  const {itemId} = useParams()
 
-  const {data, loading} = useGetData(`${import.meta.env.VITE_API_URL}/tracking/${itemId}`)
+
+  const {data, loading} = useGetData(`${import.meta.env.VITE_API_URL}/track/${itemId}`)
 
 
   const stages = ["Ingreso", "Lavado", "Secado", "Doblado", "Listo para la entrega", "Entregado"]
@@ -30,7 +31,7 @@ export default function Home() {
 
 useEffect(()=>{
     if(!data) return
-    setCurrentStage(Number(data[0]))
+    setCurrentStage(Number(data.results.estado))
 },[data])
 
 if(loading) return <div

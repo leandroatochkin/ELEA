@@ -25,7 +25,7 @@ export function useGetData(url: string){
     const [data, setData] = useState(null)
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<string>('')
-
+    console.log(url)
     useEffect(()=>{
             const getData = async () => {
                 setLoading(true)
@@ -38,6 +38,7 @@ export function useGetData(url: string){
                     setLoading(false)
                 } else {
                     const data = await response.json()
+                    console.log(data.results)
                     setData(data)
                     setLoading(false)
                 }
