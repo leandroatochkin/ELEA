@@ -4,7 +4,7 @@ import { db } from '../../db/db.js';
 
 const router = express.Router();
 
-router.get('/:id', authenticateToken, async (req, res) => {
+router.get('/:id', async (req, res) => {
     const { item } = req.params;
 
     if (item) {
@@ -12,7 +12,7 @@ router.get('/:id', authenticateToken, async (req, res) => {
     }
 
     try {
-        const [results] = await db.query(`SELECT ESTADO FROM trackingItems WHERE ID = ?`, [item]);
+        const [results] = await db.query(`SELECT ESTADO FROM trackingItems WHERE ID = $1`, [item]);
 
         if (results.affectedRows === 0) {
             return res.status(404).json({ message: 'item not found' });
