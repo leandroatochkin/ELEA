@@ -4,8 +4,7 @@ export async function runQuery() {
   const client = await db.connect();
   try {
     const res = await client.query(`
-       ALTER TABLE trackitems
-ADD COLUMN NUMERO_CLIENTE VARCHAR(8);
+       SELECT * FROM trackItems;
         `);
         console.log(res)
     return res;

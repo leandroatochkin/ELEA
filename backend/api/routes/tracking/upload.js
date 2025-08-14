@@ -17,6 +17,7 @@ router.post('/', async (req, res, next) => {
 for (const item of items) {
   const {
     ID,
+    NUMERO_CLIENTE,
     TIPO_MOVIMIENTO,
     CODIGO_MOVIMIENTO,
     CENTRO_EMISOR,
@@ -32,13 +33,14 @@ for (const item of items) {
 
   await db.query(`
     INSERT INTO trackItems (
-      ID, TIPO_MOVIMIENTO, CODIGO_MOVIMIENTO, CENTRO_EMISOR,
+      ID, NUMERO_CLIENTE, TIPO_MOVIMIENTO, CODIGO_MOVIMIENTO, CENTRO_EMISOR,
       NUMERO_MOVIMIENTO, NUMERO_SECUENCIA, NOMBRE,
       DESCRIPCION_ARTICULO, CANTIDAD, ESTADO
     ) VALUES (
-      $1, $2, $3, $4, $5, $6, $7, $8, $9, $10
+      $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11
     )
     ON CONFLICT (ID) DO UPDATE SET
+      NUMERO_CLIENTE = EXCLUDED.NUMERO_CLIENTE,
       TIPO_MOVIMIENTO = EXCLUDED.TIPO_MOVIMIENTO,
       CODIGO_MOVIMIENTO = EXCLUDED.CODIGO_MOVIMIENTO,
       CENTRO_EMISOR = EXCLUDED.CENTRO_EMISOR,
@@ -63,7 +65,6 @@ for (const item of items) {
 }
 
 res.status(201).json({ message: 'Items inserted or updated successfully' });
-    res.status(201).json({ message: 'Item inserted or updated successfully' });
 
   } catch (err) {
     console.error(`Error uploading data`, err);
