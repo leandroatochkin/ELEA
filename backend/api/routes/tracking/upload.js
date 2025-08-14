@@ -30,7 +30,7 @@ router.post('/', async (req, res, next) => {
     await db.query(`
       INSERT INTO trackItems (
                         ID, TIPO_MOVIMIENTO, CODIGO_MOVIMIENTO, CENTRO_EMISOR,
-                        NUMERO_MOVIMIENTO, NUMERO_SEQUENCIA, NOMBRE,
+                        NUMERO_MOVIMIENTO, NUMERO_SECUENCIA, NOMBRE,
                         DESCRIPCION_ARTICULO, CANTIDAD, ESTADO
                     ) VALUES (
                         $1, $2, $3, $4, $5, $6, $7, $8, $9, $10
@@ -40,7 +40,7 @@ router.post('/', async (req, res, next) => {
                         CODIGO_MOVIMIENTO = EXCLUDED.CODIGO_MOVIMIENTO,
                         CENTRO_EMISOR = EXCLUDED.CENTRO_EMISOR,
                         NUMERO_MOVIMIENTO = EXCLUDED.NUMERO_MOVIMIENTO,
-                        NUMERO_SEQUENCIA = EXCLUDED.NUMERO_SEQUENCIA,
+                        NUMERO_SECUENCIA = EXCLUDED.NUMERO_SECUENCIA,
                         NOMBRE = EXCLUDED.NOMBRE,
                         DESCRIPCION_ARTICULO = EXCLUDED.DESCRIPCION_ARTICULO,
                         CANTIDAD = EXCLUDED.CANTIDAD,
