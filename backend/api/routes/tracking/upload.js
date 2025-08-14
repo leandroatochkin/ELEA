@@ -27,6 +27,11 @@ router.post('/', async (req, res, next) => {
       ESTADO
     } = item;
 
+    console.log("About to insert:", {
+  id: ID,
+  allData: item
+});
+
     await db.query(`
       INSERT INTO trackItems (
                         ID, TIPO_MOVIMIENTO, CODIGO_MOVIMIENTO, CENTRO_EMISOR,
