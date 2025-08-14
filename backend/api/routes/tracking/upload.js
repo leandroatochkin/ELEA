@@ -28,28 +28,23 @@ router.post('/', async (req, res, next) => {
     } = item;
 
     await db.query(`
-      INSERT INTO trackingItems (
-        ID,
-        TIPO_MOVIMIENTO,
-        CODIGO_MOVIMIENTO,
-        CENTRO_EMISOR,
-        NUMERO_MOVIMIENTO,
-        NUMERO_SEQUENCIA,
-        NOMBRE,
-        DESCRIPCION_ARTICULO,
-        CANTIDAD,
-        ESTADO
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      ON DUPLICATE KEY UPDATE
-        TIPO_MOVIMIENTO = VALUES(TIPO_MOVIMIENTO),
-        CODIGO_MOVIMIENTO = VALUES(CODIGO_MOVIMIENTO),
-        CENTRO_EMISOR = VALUES(CENTRO_EMISOR),
-        NUMERO_MOVIMIENTO = VALUES(NUMERO_MOVIMIENTO),
-        NUMERO_SECUENCIA = VALUES(NUMERO_SEQUENCIA),
-        NOMBRE = VALUES(NOMBRE),
-        DESCRIPCION_ARTICULO = VALUES(DESCRIPCION_ARTICULO),
-        CANTIDAD = VALUES(CANTIDAD),
-        ESTADO = VALUES(ESTADO)
+      INSERT INTO trackItems (
+                        ID, TIPO_MOVIMIENTO, CODIGO_MOVIMIENTO, CENTRO_EMISOR,
+                        NUMERO_MOVIMIENTO, NUMERO_SEQUENCIA, NOMBRE,
+                        DESCRIPCION_ARTICULO, CANTIDAD, ESTADO
+                    ) VALUES (
+                        $1, $2, $3, $4, $5, $6, $7, $8, $9, $10
+                    )
+                    ON CONFLICT (ID) DO UPDATE SET
+                        TIPO_MOVIMIENTO = EXCLUDED.TIPO_MOVIMIENTO,
+                        CODIGO_MOVIMIENTO = EXCLUDED.CODIGO_MOVIMIENTO,
+                        CENTRO_EMISOR = EXCLUDED.CENTRO_EMISOR,
+                        NUMERO_MOVIMIENTO = EXCLUDED.NUMERO_MOVIMIENTO,
+                        NUMERO_SEQUENCIA = EXCLUDED.NUMERO_SEQUENCIA,
+                        NOMBRE = EXCLUDED.NOMBRE,
+                        DESCRIPCION_ARTICULO = EXCLUDED.DESCRIPCION_ARTICULO,
+                        CANTIDAD = EXCLUDED.CANTIDAD,
+                        ESTADO = EXCLUDED.ESTADO;
     `, [
       ID,
       TIPO_MOVIMIENTO,
