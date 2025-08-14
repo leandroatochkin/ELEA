@@ -12,7 +12,7 @@ router.get('/:id', async (req, res) => {
     }
 
     try {
-        const [results] = await db.query(`SELECT ESTADO FROM trackingItems WHERE ID = $1`, [item]);
+        const [results] = await db.query(`SELECT ESTADO FROM trackItems WHERE ID = $1`, [item]);
 
         if (results.affectedRows === 0) {
             return res.status(404).json({ message: 'item not found' });
