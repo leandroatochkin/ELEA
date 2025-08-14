@@ -2,6 +2,8 @@ import dotenv from 'dotenv'
 dotenv.config()
 import express from 'express'
 import cors from 'cors'
+import trackItem from './api/routes/tracking/track.js'
+import upload from './api/routes/tracking/upload.js'
 
 const app = express();
 
@@ -27,6 +29,9 @@ app.use(cors({
 }));
 
 app.use(express.json());
+
+app.use('/track', trackItem)
+app.use('/upload', upload)
 
 app.listen(3000, () => {
   console.log('Server running on port 3000');
