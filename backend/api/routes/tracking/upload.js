@@ -52,6 +52,7 @@ for (const item of items) {
       ESTADO = EXCLUDED.ESTADO;
   `, [
     ID,
+    NUMERO_CLIENTE,
     TIPO_MOVIMIENTO,
     CODIGO_MOVIMIENTO,
     CENTRO_EMISOR,
