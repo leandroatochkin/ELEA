@@ -8,7 +8,7 @@ const router = express.Router();
 router.post('/', async (req, res, next) => {
   try {
     const items = parseFileData(req.body.data);
-    console.log('item', item);
+
 
     if (!items || items.length === 0) {
       return res.status(400).json({ message: 'No data provided or data is invalid' });
@@ -28,7 +28,7 @@ for (const item of items) {
     ESTADO
   } = item;
 
-  console.log("About to insert:", { id: ID, allData: items });
+  console.log("About to insert:", { id: ID, allData: item });
 
   await db.query(`
     INSERT INTO trackItems (
