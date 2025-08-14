@@ -5,14 +5,14 @@ import { db } from '../../db/db.js';
 const router = express.Router();
 
 router.get('/:id', async (req, res) => {
-    const { item } = req.params;
+    const { id } = req.params;
 
-    if (item) {
+    if (id) {
         return res.status(403).json({ message: 'Missing fields'});
     }
 
     try {
-        const [results] = await db.query(`SELECT ESTADO FROM trackItems WHERE ID = $1`, [item]);
+        const [results] = await db.query(`SELECT ESTADO FROM trackItems WHERE ID = $1`, [id]);
 
         if (results.affectedRows === 0) {
             return res.status(404).json({ message: 'item not found' });
