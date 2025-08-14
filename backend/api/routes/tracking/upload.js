@@ -28,7 +28,7 @@ for (const item of items) {
     ESTADO
   } = item;
 
-  console.log("About to insert:", { id: ID, allData: item });
+  console.log("About to insert:", { id: ID, allData: items });
 
   await db.query(`
     INSERT INTO trackItems (
