@@ -27,6 +27,7 @@ export function useGetData<T>(url: string){
     const [error, setError] = useState<string>('')
     console.log(url)
     useEffect(()=>{
+        if (!url) return;
             const getData = async () => {
                 setLoading(true)
                 try{

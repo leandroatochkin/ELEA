@@ -15,12 +15,12 @@ export default function Home() {
 
   const { itemId } = useParams();
 
-  const apiUrl = import.meta.env.VITE_API_URL;
+const apiUrl = import.meta.env.VITE_API_URL;
 
-  // Guard: do not call hook if itemId or apiUrl is missing
-  const { data, loading, error } = useGetData<TrackResponse>(
-    itemId && apiUrl ? `${apiUrl}/track/${itemId}` : ""
-  );
+const url =
+  apiUrl && itemId ? `${apiUrl}/track/${itemId}` : '';
+
+const { data, loading, error } = useGetData<TrackResponse>(url);
 
   const stages = [
     "Ingreso",
