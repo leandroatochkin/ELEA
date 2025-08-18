@@ -4,7 +4,7 @@ export async function runQuery() {
   const client = await db.connect();
   try {
     const res = await client.query(`
-       DELETE FROM trackItems WHERE NOMBRE = 'LEANDRO';
+       SELECT * FROM trackItems;
         `);
         console.log(res)
     return res;

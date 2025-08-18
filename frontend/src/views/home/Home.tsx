@@ -18,6 +18,7 @@ export default function Home() {
 
   const {data, loading} = useGetData<TrackResponse>(`${import.meta.env.VITE_API_URL}/track/${itemId}`)
 
+  console.log(import.meta.env.VITE_API_URL)
 
   const stages = ["Ingreso", "Lavado", "Secado", "Doblado", "Listo para la entrega", "Entregado"]
 
