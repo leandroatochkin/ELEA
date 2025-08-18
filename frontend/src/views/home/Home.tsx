@@ -1,56 +1,75 @@
-import { useEffect, useState } from "react"
-import { useGetData } from "../../hooks/Hooks"
-import { useParams } from "react-router-dom"
-import ProgressBar from "../../components/ProgressBar"
-import { BounceLoader } from "react-spinners"
+import { useEffect, useState } from "react";
+import { useGetData } from "../../hooks/Hooks";
+import { useParams } from "react-router-dom";
+import ProgressBar from "../../components/ProgressBar";
+import { BounceLoader } from "react-spinners";
 
 type TrackResponse = {
   results: {
-    estado: number
-  }
-}
+    estado: number;
+  };
+};
 
 export default function Home() {
-  const [currentStage, setCurrentStage] = useState<number>(0)
+  const [currentStage, setCurrentStage] = useState<number>(0);
 
-  const {itemId} = useParams()
+  const { itemId } = useParams();
 
+  const apiUrl = import.meta.env.VITE_API_URL;
 
-  const {data, loading} = useGetData<TrackResponse>(`https://elea-backend.onrender.com/track/${itemId}`)
+  // Guard: do not call hook if itemId or apiUrl is missing
+  const { data, loading, error } = useGetData<TrackResponse>(
+    itemId && apiUrl ? `${apiUrl}/track/${itemId}` : ""
+  );
 
-  console.log(import.meta.env.VITE_API_URL)
+  const stages = [
+    "Ingreso",
+    "Lavado",
+    "Secado",
+    "Doblado",
+    "Listo para la entrega",
+    "Entregado",
+  ];
 
-  const stages = ["Ingreso", "Lavado", "Secado", "Doblado", "Listo para la entrega", "Entregado"]
+  useEffect(() => {
+    if (data && data.results) {
+      setCurrentStage(Number(data.results.estado));
+    }
+  }, [data]);
 
-//   const nextStage = () => {
-//     setCurrentStage((prev) => Math.min(prev + 1, stages.length - 1))
-//   }
+  if (!itemId) return <div>Invalid item</div>;
 
-//   const prevStage = () => {
-//     setCurrentStage((prev) => Math.max(prev - 1, 0))
-//   }
+  if (loading)
+    return (
+      <div
+        style={{
+          height: "100dvh",
+          width: "100vw",
+          backgroundColor: "#faf9f7",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <BounceLoader />
+      </div>
+    );
 
-//   const resetProgress = () => {
-//     setCurrentStage(0)
-//   }
-
-useEffect(()=>{
-    if(!data) return
-    setCurrentStage(Number(data.results.estado))
-},[data])
-
-if(loading) return <div
-                    style={{
-                        height: '100dvh',
-                        width: '100vw',
-                        backgroundColor: "#faf9f7",
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}
-                    >
-                        <BounceLoader />
-                    </div>
+  if (error)
+    return (
+      <div
+        style={{
+          height: "100dvh",
+          width: "100vw",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          color: "red",
+        }}
+      >
+        Error fetching data: {error}
+      </div>
+    );
 
   return (
     <div
@@ -63,12 +82,12 @@ if(loading) return <div
       <div
         style={{
           width: "100vw",
-          height: '100%',
+          height: "100%",
           display: "flex",
           flexDirection: "column",
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: "40px"
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "40px",
         }}
       >
         <h1
@@ -76,77 +95,15 @@ if(loading) return <div
             textAlign: "center",
             color: "#333",
             fontSize: "2rem",
-            fontWeight: "600",
-            margin: "0",
+            fontWeight: 600,
+            margin: 0,
           }}
         >
           Progress Tracker
         </h1>
 
         <ProgressBar stages={stages} currentStage={currentStage} />
-
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "12px",
-            flexWrap: "wrap",
-          }}
-        >
-          {/* <button
-            onClick={prevStage}
-            disabled={currentStage === 0}
-            style={{
-              padding: "12px 24px",
-              backgroundColor: currentStage === 0 ? "#e5e7eb" : "#10b981",
-              color: currentStage === 0 ? "#9ca3af" : "white",
-              border: "none",
-              borderRadius: "8px",
-              cursor: currentStage === 0 ? "not-allowed" : "pointer",
-              fontSize: "14px",
-              fontWeight: "500",
-              transition: "all 0.2s ease",
-            }}
-          >
-            Anterior
-          </button>
-
-          <button
-            onClick={nextStage}
-            disabled={currentStage === stages.length - 1}
-            style={{
-              padding: "12px 24px",
-              backgroundColor: currentStage === stages.length - 1 ? "#e5e7eb" : "#10b981",
-              color: currentStage === stages.length - 1 ? "#9ca3af" : "white",
-              border: "none",
-              borderRadius: "8px",
-              cursor: currentStage === stages.length - 1 ? "not-allowed" : "pointer",
-              fontSize: "14px",
-              fontWeight: "500",
-              transition: "all 0.2s ease",
-            }}
-          >
-            Siguiente
-          </button>
-
-          <button
-            onClick={resetProgress}
-            style={{
-              padding: "12px 24px",
-              backgroundColor: "#6b7280",
-              color: "white",
-              border: "none",
-              borderRadius: "8px",
-              cursor: "pointer",
-              fontSize: "14px",
-              fontWeight: "500",
-              transition: "all 0.2s ease",
-            }}
-          >
-            Reiniciar
-          </button> */}
-        </div>
       </div>
     </div>
-  )
+  );
 }
