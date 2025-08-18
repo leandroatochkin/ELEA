@@ -21,8 +21,8 @@ export function useMobile() {
     return isMobile
   }
 
-export function useGetData(url: string){
-    const [data, setData] = useState(null)
+export function useGetData<T>(url: string){
+    const [data, setData] = useState<T | null>(null)
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<string>('')
     console.log(url)

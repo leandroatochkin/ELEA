@@ -4,15 +4,19 @@ import { useParams } from "react-router-dom"
 import ProgressBar from "../../components/ProgressBar"
 import { BounceLoader } from "react-spinners"
 
-
+type TrackResponse = {
+  results: {
+    estado: number
+  }
+}
 
 export default function Home() {
-  const [currentStage, setCurrentStage] = useState(0)
+  const [currentStage, setCurrentStage] = useState<number>(0)
 
   const {itemId} = useParams()
 
 
-  const {data, loading} = useGetData(`${import.meta.env.VITE_API_URL}/track/${itemId}`)
+  const {data, loading} = useGetData<TrackResponse>(`${import.meta.env.VITE_API_URL}/track/${itemId}`)
 
 
   const stages = ["Ingreso", "Lavado", "Secado", "Doblado", "Listo para la entrega", "Entregado"]
