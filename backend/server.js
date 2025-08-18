@@ -16,6 +16,8 @@ const allowedOrigins = [
     frontendURL_B,
     frontendURL_C
 ];
+
+console.log(allowedOrigins)
 app.use(cors({
     origin: (origin, callback) => {
         if (!origin)
