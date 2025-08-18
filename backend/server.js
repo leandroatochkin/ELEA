@@ -10,9 +10,11 @@ const app = express();
 
 const frontendURL_A = process.env.FRONTEND_URL_A;
 const frontendURL_B = process.env.FRONTEND_URL_B;
+const frontendURL_C = process.env.FRONTEND_URL_C;
 const allowedOrigins = [
     frontendURL_A,
-    frontendURL_B
+    frontendURL_B,
+    frontendURL_C
 ];
 app.use(cors({
     origin: (origin, callback) => {
