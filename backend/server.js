@@ -8,9 +8,11 @@ import upload from './api/routes/tracking/upload.js'
 const app = express();
 
 
-const frontendURL = process.env.FRONTEND_URL_A;
+const frontendURL_A = process.env.FRONTEND_URL_A;
+const frontendURL_B = process.env.FRONTEND_URL_B;
 const allowedOrigins = [
-    frontendURL,
+    frontendURL_A,
+    frontendURL_B
 ];
 app.use(cors({
     origin: (origin, callback) => {
