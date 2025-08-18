@@ -16,7 +16,7 @@ export default function Home() {
   const {itemId} = useParams()
 
 
-  const {data, loading} = useGetData<TrackResponse>(`https://elea-backend.onrender.com/track/${itemId}`)
+  const {data, loading} = useGetData<TrackResponse>(`${import.meta.env.VITE_API_URL}/track/${itemId}`)
 
   console.log(import.meta.env.VITE_API_URL)
 
