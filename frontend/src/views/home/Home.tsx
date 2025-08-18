@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useGetData } from "../../hooks/Hooks";
-import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import ProgressBar from "../../components/ProgressBar";
 import { BounceLoader } from "react-spinners";
 
@@ -13,7 +13,8 @@ type TrackResponse = {
 export default function Home() {
   const [currentStage, setCurrentStage] = useState<number>(0);
 
-  const { itemId } = useParams();
+    const [searchParams] = useSearchParams();
+  const itemId = searchParams.get('itemId'); // string | null
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
