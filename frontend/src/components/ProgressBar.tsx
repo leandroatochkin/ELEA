@@ -1,5 +1,6 @@
 
 import type React from "react"
+import { useMobile } from "../hooks/Hooks"
 
 interface ProgressBarProps {
   stages: string[]
@@ -9,12 +10,15 @@ interface ProgressBarProps {
 const ProgressBar: React.FC<ProgressBarProps> = ({ stages, currentStage }) => {
   const progressPercentage = (currentStage / (stages.length - 1)) * 100
 
+  const isMobile = useMobile()
+
   return (
     <div
       style={{
         width: "100%",
         display: "flex",
-        justifyContent: "center",
+        justifyContent: isMobile ? "start" : "center",
+        marginLeft: isMobile ? "100px" : "0",
         padding: "20px 0",
       }}
     >
@@ -27,6 +31,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ stages, currentStage }) => {
           alignItems: "center",
           position: "relative",
           height: "400px",
+         
         }}
       >
         {/* Background Track */}
